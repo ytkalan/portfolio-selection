@@ -12,20 +12,31 @@ class Main extends React.Component {
   }
 
   componentDidMount() {
-    getHSIData().then(data => this.setState({ data }));
+    getHSIData().then(data => {
+      const startTime = new Date();
+      startTime.setYear(startTime.getFullYear() - 5);
+      const startTimeDateString = startTime.toISOString() .split("T")[0];    
+
+      const filteredData = Object.keys(data).filter(
+        value => value > startTimeDateString
+      ).reduce(
+        (acc, val)=>[...acc, {"x": (new Date(val)).valueOf(), "y": parseFloat(data[val]["1. open"])}],
+        []
+      );
+
+      console.log(filteredData);
+      this.setState({ data: filteredData });
+    });
   }
 
   render() {
+    console.log(this.state);
     return (
       <div>
-        <div style={{fontSize: 40, fontWeight: 700, color: 'white', textAlign: 'center'}}>
-          Just a simple widget to get HSI stock data!
-        </div>
-        <Grid container alignItems="center">
-          <Grid item xs={6}>
-            <Graph />
+        <Grid container alignItems="center" justify="center">
+          <Grid container item xs={12} alignItems="center" justify="center">
+            <Graph data={this.state.data} />
           </Grid>
-          <Grid item xs={6}>2</Grid>
         </Grid>
       </div>
     )
