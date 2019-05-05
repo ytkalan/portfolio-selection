@@ -8,6 +8,10 @@ const graph = ({ data }) => (
       color="red"
       data={data}
     />
+    <LineSeries
+      color="blue"
+      data={data}
+    />
     <XAxis />
     <YAxis />
   </XYPlot>

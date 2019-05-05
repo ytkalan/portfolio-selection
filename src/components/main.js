@@ -2,6 +2,7 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import { getHSIData } from '../utils/getData';
 import Graph from './lineGraph';
+import SearchBar from './SearchBar';
 
 class Main extends React.Component {
   constructor(props) {
@@ -30,10 +31,12 @@ class Main extends React.Component {
   }
 
   render() {
-    console.log(this.state);
     return (
-      <div>
+      <div style={{padding: '10px'}}>
         <Grid container alignItems="center" justify="center">
+          <Grid item xs={6}>
+            <SearchBar />
+          </Grid>
           <Grid container item xs={12} alignItems="center" justify="center">
             <Graph data={this.state.data} />
           </Grid>
